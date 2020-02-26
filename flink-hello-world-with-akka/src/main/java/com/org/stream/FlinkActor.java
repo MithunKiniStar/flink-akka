@@ -21,14 +21,14 @@ public class FlinkActor extends AbstractActor {
     public Receive createReceive() {
         return receiveBuilder()
                 .match(Customer.class, customer -> {
-                    System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>");
-                    System.out.println("Customer Notified>>>>" + customer.getEmail());
+                    log.info("Customer Email>>>>" + customer.getEmail());
                     if(customerMap.get(customer.getEmail()) == null){
                         customerMap.putIfAbsent(customer.getEmail(),1);
                     }else {
                         Integer counter = customerMap.get(customer.getEmail());
                         customerMap.put(customer.getEmail(), ++counter);
                         if(counter==3 || customer.isCustomerFormSubmitted()) {
+                            log.info("Customer Targeted>>>>" + customer.getEmail());
                             customer.setCustomerNotified(true);
                             remoteActor.tell(customer, getSelf());
                         }

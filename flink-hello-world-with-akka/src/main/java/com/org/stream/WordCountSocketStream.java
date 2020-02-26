@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
 /**
  * This streaming application reads data from a socket and counts the words in it
  * 
- * @author mans2singh
+ * @author Mithun Kini
  *
  */
 public class WordCountSocketStream {
