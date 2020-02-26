@@ -2,21 +2,26 @@ package com.example;
 
 
 import akka.actor.AbstractActor;
+import akka.event.Logging;
+import akka.event.LoggingAdapter;
 import com.customer.core.Customer;
 
 
 
 public class DecissionActor extends AbstractActor {
 
+    LoggingAdapter log = Logging.getLogger(getContext().getSystem(), this);
+
+
+
     @Override
     public Receive createReceive() {
         return receiveBuilder()
                 .match(Customer.class, customer -> {
                     if(customer.isCustomerNotified()) {
-                        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>");
-                        System.out.println("Customer Notified>>>>" + customer.isCustomerNotified());
+                        log.info("Customer Notified>>>>" + customer.isCustomerNotified());
                         if (customer.isCustomerFormSubmitted()) {
-                            System.out.println("Customer Submitted>>>>" + customer.isCustomerFormSubmitted());
+                            log.info("Customer Submitted>>>>" + customer.isCustomerFormSubmitted());
                         }
                     }
                 })
